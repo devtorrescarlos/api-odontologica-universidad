@@ -34,3 +34,12 @@ def get_dentists(db: Session):
 def get_dentist_by_id(db: Session, dentist_id: int):
     return db.query(Dentist).filter(Dentist.id == dentist_id).first()
 
+def delete_dentist_by_id(db: Session, dentist_id: int):
+    db_dentist = db.query(Dentist).filter(Dentist.id == dentist_id).first()
+    if not db_dentist:
+        raise HTTPException(status_code=404, detail="El dentista no existe")
+    
+    db.delete(db_dentist)
+    db.commit()
+    return {"message": "Dentista eliminado correctamente"}
+
