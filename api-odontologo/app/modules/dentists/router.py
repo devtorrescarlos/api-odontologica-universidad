@@ -30,3 +30,9 @@ def get_dentist_by_id(dentist_id: int, db: Session = Depends(get_db), current_us
 def update_dentist(dentist_id: int, dentist: schema.DentistUpdate, db: Session = Depends(get_db), current_user: User = Depends(get_current_active_user)):
     return service.update_dentist_by_id(db=db, dentist=dentist, dentist_id=dentist_id)
 
+@router.delete("/{dentist_id}")
+def delete_dentist(dentist_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_active_user)):
+    if dentist_id <= 0:
+        raise HTTPException(status_code=400, detail="El ID del dentista debe ser un número positivo")
+    
+    return service.delete_dentist_by_id(db=db, dentist_id=dentist_id)
