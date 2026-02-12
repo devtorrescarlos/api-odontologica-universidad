@@ -31,8 +31,8 @@ class Appointment(Base):
     time = Column(Time, nullable=False)
     reason = Column(String(255), nullable=False)
 
-    patient_id = Column(Integer, ForeignKey("patients.id"), nullable=False)
-    dentist_id = Column(Integer, ForeignKey("dentists.id"), nullable=False)
+    patient_id = Column(Integer, ForeignKey("patients.id", ondelete="CASCADE"), nullable=False)
+    dentist_id = Column(Integer, ForeignKey("dentists.id", ondelete="CASCADE"), nullable=False)
     
     patient = relationship("Patient", back_populates="appointments")
     dentist = relationship("Dentist", back_populates="appointments")
